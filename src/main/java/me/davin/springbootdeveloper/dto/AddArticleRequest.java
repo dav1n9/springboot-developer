@@ -13,10 +13,11 @@ public class AddArticleRequest {
     private String title;
     private String content;
 
-    public Article toEntity() {
+    public Article toEntity(String author) {
         return Article.builder()    // 빌더 패턴 사용
                 .title(title)
                 .content(content)
+                .author(author)
                 .build();
     }
 }
