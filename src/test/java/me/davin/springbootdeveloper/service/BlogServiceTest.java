@@ -37,14 +37,15 @@ class BlogServiceTest {
         // given
         final String title = "title";
         final String content = "content";
+        final String author = "davin";
         AddArticleRequest request = new AddArticleRequest(title, content);
-        Article mockArticle = new Article(title, content);
+        Article mockArticle = new Article(author, title, content);
 
         // Mocking the behavior of blogRepository.save()
         given(blogRepository.save(any())).willReturn(mockArticle);
 
         // When
-        Article savedArticle = blogService.save(request);
+        Article savedArticle = blogService.save(request, author);
 
         // Then
         verify(blogRepository).save(any());
@@ -58,8 +59,8 @@ class BlogServiceTest {
     void findAll() {
         // given
         List<Article> mockArticles = List.of(
-                new Article("title1", "content1"),
-                new Article("title2", "content2")
+                new Article("author1", "title1", "content1"),
+                new Article("author2", "title2", "content2")
         );
         given(blogRepository.findAll()).willReturn(mockArticles);
 
@@ -81,7 +82,8 @@ class BlogServiceTest {
         long articleId = 1L;
         final String title = "Title";
         final String content = "Content";
-        Article mockArticle = new Article(title, content);
+        final String author = "davin";
+        Article mockArticle = new Article(author, title, content);
 
         given(blogRepository.findById(articleId)).willReturn(Optional.of(mockArticle));
 
@@ -124,7 +126,7 @@ class BlogServiceTest {
         // given
         long articleId = 1L;
         UpdateArticleRequest request = new UpdateArticleRequest("newTitle", "newContent");
-        Article mockArticle = new Article("Title", "Content");
+        Article mockArticle = new Article("author", "Title", "Content");
 
         given(blogRepository.findById(articleId)).willReturn(Optional.of(mockArticle));
 
